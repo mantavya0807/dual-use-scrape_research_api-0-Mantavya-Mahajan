@@ -10,6 +10,7 @@ import subprocess
 import os
 import shutil
 from urllib.parse import urlparse
+import csv
 
 def scrape_page():
     url = 'https://openreview.net/group?id=NeurIPS.cc/2024/Workshop/SafeGenAi#tab-accept-oral'
@@ -74,6 +75,18 @@ def find_github_links(researchers_data):
             print(f'error in {name}: {e}')
     
     return researchers_data
+
+def append_to_csv(data, filename = "results.csv"):
+    if not data:
+        return
+    file_exists = os.path.exists(filename)
+    with open(filename,'a',newline='',encoding='utf-8') as output_file:
+        fieldnames = ['organization_name','person_name','api_key','associated_file_location']
+        writer  = csv.DictWriter(output_file,fieldnames=fieldnames)
+        if not file_exists:
+            writer.writeheader()
+        writer.writerows(data)
+    print('saved')
 
 def scan_repository(repo_url, output_dir = "gitleaks_reports"):
     repo_name = repo_url.split('/')[-1].replace('.git','')
