@@ -63,7 +63,7 @@ def find_github_links(researchers_data):
             if github_link:
                 found_url = github_link['href']
                 researchers_data[name]['github'] = found_url
-                print(f'found {github_link} for {name}')
+                print(f'found {found_url} for {name}')
             else:
                 print(f'no github for {name}')
         except requests.exceptions.RequestException as e:
