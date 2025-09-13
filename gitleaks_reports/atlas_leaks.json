@@ -1,0 +1,23 @@
+[
+ {
+  "RuleID": "generic-api-key",
+  "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+  "StartLine": 1552,
+  "EndLine": 1552,
+  "StartColumn": 39,
+  "EndColumn": 77,
+  "Match": "T5Tokenizer, T5ForConditionalGeneration",
+  "Secret": "T5ForConditionalGeneration",
+  "File": "src/modeling_t5.py",
+  "SymlinkFile": "",
+  "Commit": "4b6df19687210e4c8e9df2795664195041f9e45c",
+  "Link": "https://github.com/jamesoneill12/atlas/blob/4b6df19687210e4c8e9df2795664195041f9e45c/src/modeling_t5.py#L1552",
+  "Entropy": 3.5944824,
+  "Author": "Maria Lomeli",
+  "Email": "marialomeli@fb.com",
+  "Date": "2022-12-15T16:15:50Z",
+  "Message": "[Atlas]Added torchrun support (#4)\n\n* Added torchrun_utils and have  every process manually call torch.cuda.set_device(rank) on initialization for torchrun runs.\n\n* Missing config for GPUIndexFlatIP and moved .half() to scores output\n\n* Fixed embeddings chunks ranges\n\n* Added further defaults in finetune_qa",
+  "Tags": [],
+  "Fingerprint": "4b6df19687210e4c8e9df2795664195041f9e45c:src/modeling_t5.py:generic-api-key:1552"
+ }
+]

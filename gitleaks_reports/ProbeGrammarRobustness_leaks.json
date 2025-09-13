@@ -1,0 +1,23 @@
+[
+ {
+  "RuleID": "generic-api-key",
+  "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+  "StartLine": 240,
+  "EndLine": 240,
+  "StartColumn": 27,
+  "EndColumn": 53,
+  "Match": "key_layer, transpose_b=True",
+  "Secret": "transpose_b=True",
+  "File": "transformers/modeling_tf_bert.py",
+  "SymlinkFile": "",
+  "Commit": "82d2a6b0776381ed854ebc1d9dc9514e08d89e89",
+  "Link": "https://github.com/uclanlp/ProbeGrammarRobustness/blob/82d2a6b0776381ed854ebc1d9dc9514e08d89e89/transformers/modeling_tf_bert.py#L240",
+  "Entropy": 3.625,
+  "Author": "fanyin3639",
+  "Email": "47026748+fanyin3639@users.noreply.github.com",
+  "Date": "2020-05-14T04:32:11Z",
+  "Message": "Update README.md",
+  "Tags": [],
+  "Fingerprint": "82d2a6b0776381ed854ebc1d9dc9514e08d89e89:transformers/modeling_tf_bert.py:generic-api-key:240"
+ }
+]

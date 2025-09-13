@@ -1,0 +1,23 @@
+[
+ {
+  "RuleID": "generic-api-key",
+  "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+  "StartLine": 56,
+  "EndLine": 56,
+  "StartColumn": 6,
+  "EndColumn": 44,
+  "Match": "google-auth-oauthlib=0.4.4=pyhd3eb1b0_0",
+  "Secret": "0.4.4=pyhd3eb1b0_0",
+  "File": "environment.yml",
+  "SymlinkFile": "",
+  "Commit": "c2682a9b4d0323a46c6a1e79d4ff81f52cbc824d",
+  "Link": "https://github.com/KareemYousrii/SPL/blob/c2682a9b4d0323a46c6a1e79d4ff81f52cbc824d/environment.yml#L56",
+  "Entropy": 3.5724313,
+  "Author": "Kareem Ahmed",
+  "Email": "kareem.yousrii@gmail.com",
+  "Date": "2023-12-04T21:15:19Z",
+  "Message": "Add constraint files\n\nAdd constraint files used in Warcraft experiment",
+  "Tags": [],
+  "Fingerprint": "c2682a9b4d0323a46c6a1e79d4ff81f52cbc824d:environment.yml:generic-api-key:56"
+ }
+]

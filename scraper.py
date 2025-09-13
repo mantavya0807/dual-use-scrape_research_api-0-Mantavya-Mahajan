@@ -79,7 +79,7 @@ def scan_repository(repo_url, output_dir = "gitleaks_reports"):
     repo_name = repo_url.split('/')[-1].replace('.git','')
     try:
         print(f"scanning {repo_url}")
-        subprocess.run(['git', 'clone', '--depth' '1', repo_url], check=True, capture_output=True, text=True)
+        subprocess.run(['git', 'clone', '--depth', '1', repo_url], check=True, capture_output=True, text=True)
         if not os.path.isdir(repo_name): return
 
         print(f'doing gitleaks on {repo_name}')
@@ -92,9 +92,18 @@ def scan_repository(repo_url, output_dir = "gitleaks_reports"):
         print(f'error {e}')
     finally:
         if os.path.isdir(repo_name):
-            time.sleep(1)
             print(f'cleaning up')
-            shutil.rmtree(repo_name)
+            for i in range(3):
+                try:
+                    shutil.rmtree(repo_name)
+                    print("cleanup complete")
+                    break
+                except PermissionError as e:
+                    if i<2:
+                        print("trying again")
+                        time.sleep(2)
+                    else:
+                        print('cleanup failed')
 
 def process_github_url(url):
     parsed_path = urlparse(url).path.strip('/').split('/')
@@ -126,4 +135,4 @@ if __name__ == "__main__":
             github_urls_to_scan.append(data['github'])
     for urls in github_urls_to_scan:
         process_github_url(urls)
-        
+
