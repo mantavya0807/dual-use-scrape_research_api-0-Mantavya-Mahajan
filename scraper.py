@@ -6,6 +6,10 @@ from bs4 import BeautifulSoup
 import time
 import re
 import requests
+import subprocess
+import os
+import shutil
+from urllib.parse import urlparse
 
 def scrape_page():
     url = 'https://openreview.net/group?id=NeurIPS.cc/2024/Workshop/SafeGenAi#tab-accept-oral'
@@ -70,7 +74,56 @@ def find_github_links(researchers_data):
             print(f'error in {name}: {e}')
     
     return researchers_data
+
+def scan_repository(repo_url, output_dir = "gitleaks_reports"):
+    repo_name = repo_url.split('/')[-1].replace('.git','')
+    try:
+        print(f"scanning {repo_url}")
+        subprocess.run(['git', 'clone', '--depth' '1', repo_url], check=True, capture_output=True, text=True)
+        if not os.path.isdir(repo_name): return
+
+        print(f'doing gitleaks on {repo_name}')
+        os.makedirs(output_dir, exist_ok=True)
+        report_path = os.path.join(output_dir, f'{repo_name}_leaks.json')
+        gitleaks_command = ['gitleaks','detect', '-s','.','--report-format','json','--report-path', os.path.join('..', report_path)]
+        subprocess.run(gitleaks_command, check=True, cwd = repo_name, capture_output=True, text=True)
+        print('scan completed')
+    except subprocess.CalledProcessError as e:
+        print(f'error {e}')
+    finally:
+        if os.path.isdir(repo_name):
+            time.sleep(1)
+            print(f'cleaning up')
+            shutil.rmtree(repo_name)
+
+def process_github_url(url):
+    parsed_path = urlparse(url).path.strip('/').split('/')
+    if len(parsed_path)==2:
+        scan_repository(url)
+    elif len(parsed_path)==1:
+        username = parsed_path[0]
+        print('user profile detected')
+        api_url = f'https://api.github.com/users/{username}/repos'
+        try:
+            response = requests.get(api_url)
+            response.raise_for_status()
+            repos = response.json()
+            for repo in repos:
+                clone_url = repo['clone_url']
+                scan_repository(clone_url)
+        except requests.exceptions.RequestException as e:
+            print('failed')
+    
+    else:
+        print('inrecognized url')
     
 if __name__ == "__main__":
     research_profiles = scrape_page()
     fianl_data = find_github_links(research_profiles)
+    github_urls_to_scan = []
+    for person, data in fianl_data.items():
+        if data.get('github'):
+            github_urls_to_scan.append(data['github'])
+    for urls in github_urls_to_scan:
+        process_github_url(urls)
+        
