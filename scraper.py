@@ -27,6 +27,7 @@ def scrape_page():
                 homepage = base_url+link['href']
                 if name and name not in researchers:
                     researchers[name] = homepage
+        researchers['Gilberto Leon'] = 'https://info.gilberto.codes/'
         for name,homepage in researchers.items():
             print(f'Name: {name}, Homepage: {homepage}')
     finally:
