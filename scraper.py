@@ -85,7 +85,7 @@ def scan_repository(repo_url, output_dir = "gitleaks_reports"):
         print(f'doing gitleaks on {repo_name}')
         os.makedirs(output_dir, exist_ok=True)
         report_path = os.path.join(output_dir, f'{repo_name}_leaks.json')
-        gitleaks_command = ['gitleaks','detect', '-s','.','--report-format','json','--report-path', os.path.join('..', report_path)]
+        gitleaks_command = ['gitleaks','detect','--config',os.patj.join('..','.gitleaks.toml'), '-s', '--report-format', 'json', '--report-path', os.path.join('..', report_path)]
         subprocess.run(gitleaks_command, check=True, cwd = repo_name, capture_output=True, text=True)
         print('scan completed')
     except subprocess.CalledProcessError as e:

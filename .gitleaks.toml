@@ -1,0 +1,30 @@
+title = "Custom AI API Key Rules"
+[[Rules]]
+id = 'openai-api-key'
+description = "OpenAI api key"
+regex = ''''sk-[a-zA-Z0-9]{48}'''
+tags = ['api','key','openai']
+
+[[Rules]]
+id = 'together-ai-api-key'
+description = "Together AI api key"
+regex = ''''[a-fA-F0-9]{64}'''
+tags = ['api','key','together']
+
+[[Rules]]
+id = 'anthropic-api-key'
+description = "anthropic api key"
+regex = ''''sk-any-api03-[_a-zA-Z0-9_]{75,95}'''
+tags = ['api','key','anthropic']
+
+[[Rules]]
+id = 'fireworks-ai-api-key'
+description = "Fireworks AI api key"
+regex = ''''fw-[a-zA-Z0-9]{48,64}'''
+tags = ['api','key','fireworks']
+
+[[Rules]]
+id = 'litellm-custom-key'
+description = "Generic Key Pattern"
+regex = '''(sk|pk)_[a-zA-Z0-9]{32,48}'''
+tags = ['api','key','fireworks']
